@@ -1,0 +1,825 @@
+import React from "react";
+
+import ReactAnimatedWeather from "react-animated-weather"; 
+import './load.css';
+import './Home.css';
+import icm from './imaages/icons/icon-1.svg'
+
+ 
+  const defaults = {
+    icon:icm,
+    color: "white",
+    size: 90,
+    animate:true,
+  };
+
+
+class Home extends React.Component {
+    constructor(props){
+        super(props);
+        this.state=
+            {
+                value :'',
+                
+            };
+        this.handlechange =
+        this.handlechange.bind(this);
+        this.handlesubmit =
+        this.handlesubmit.bind(this);
+        
+    }
+    handlechange(event){
+        console.log("hello this is onchange");
+        
+        
+        this.setState({value: event.target.value});
+        console.log(event.target.value);
+        
+    }
+    handlesubmit(event){
+        console.log("hello this is submitted");
+        // if(this.target.value!='')
+        // this.getlatlong(this.state.value);
+        console.log(this.event.value);
+        event.preventDefault();
+    }
+
+    state = {
+        
+        lat: undefined,
+        lon: undefined,
+        
+        errorMessage: undefined,
+        temperatureC: undefined,
+        dt_text2:undefined,
+        dt_text3:undefined,
+        dt_text4:undefined,
+        dt_text5:undefined,
+        dt_text6:undefined,
+        dt_text7:undefined,
+        city: undefined,
+        country: undefined,
+        humidity: undefined,
+        windSpeed:undefined,
+        description: undefined,
+        icon: "CLEAR_DAY",
+        dt_text:undefined,
+        errorMsg: undefined,
+        main1:undefined,
+        //day 2
+        temp2:undefined,
+        main2:undefined,
+        description2:undefined,
+        icon2:"CLEAR_DAY",
+
+        //day3
+        temp3:undefined,
+        main3:undefined,
+        description3:undefined,
+        icon3:"CLEAR_DAY",
+
+        //day4
+        temp4:undefined,
+        main4:undefined,
+        description4:undefined,
+        icon4:"CLEAR_DAY",
+        //day5
+        temp5:undefined,
+        main5:undefined,
+        description5:undefined,
+        icon5:"Cloudy",
+
+        //day6
+        temp6:undefined,
+        main6:undefined,
+        description6:undefined,
+        icon6:"CLEAR_DAY",
+
+        //DAY 7
+        temp7:undefined,
+        main7:undefined,
+        description7:undefined,
+        icon7:"CLOUDY",
+        
+      };
+      
+
+    //   getlatlong =async(value)=> {
+    //     await fetch(`${process.env.REACT_APP_API_URL}/forecast?q=${value}&units=metric&lan=hi&APPID=${process.env.REACT_APP_API_KEY}`)
+    //     .then(res => res.json())
+    //     .then(result =>{
+    //         console.log(result);
+    //     })}
+        
+
+        
+
+      
+
+    //   componentDidMount() {
+        // if (navigator.geolocation) {
+        //   this.getPosition()
+        //     //If user allow location service then will fetch data & send it to get-weather function.
+        //     .then((position) => {
+        //       this.getWeather(position.coords.latitude, position.coords.longitude);
+        //     })
+        //     .catch((err) => {
+        //       //If user denied location service then standard location weather will le shown on basis of latitude & latitude.
+        //       this.getWeather(28.67, 77.22);
+        //       alert(
+        //         "You have disabled location service. Allow 'This APP' to access your location. Your current location will be used for calculating Real time weather."
+        //       );
+        //     });
+        // } else {
+        //   alert("Geolocation not available");
+        // }
+
+        // if(this.state.value!=''){
+        //     console.log("hello");
+        // }
+        // else{
+        //     this.setState({value:"indore"});
+            
+        // }
+    
+       
+        // };
+
+
+        
+
+        
+        
+        getPosition = (options) => {
+            return new Promise(function (resolve, reject) {
+              navigator.geolocation.getCurrentPosition(resolve, reject, options);
+            });
+         };
+
+
+         getWeather = async () => {
+            const city11=this.state.value;
+            const api_city=await fetch(`${process.env.REACT_APP_API_URL}/forecast?q=${city11}&units=metric&lan=hi&APPID=${process.env.REACT_APP_API_KEY}`);
+            const data=await api_city.json();
+            
+            // this.setState({
+            //     lat:data1.city.coord.lat,
+            //     lon:data1.city.coord.lon,
+
+            //  });
+            
+            // const api_call = await fetch(`${process.env.REACT_APP_API_URL}/forecast?lat=${lat}&lon=${lon}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`);
+            
+            
+             
+            // const data = await api_call.json();
+            
+            console.log(this.state.value);  
+            console.log(data);
+            
+            console.log(data.list[0].weather[0].main);
+            this.setState({
+            //   lat: this.state.lat,
+            //   lon: this.state.lon,
+              city:data.city.name,
+              country:data.city.country,
+              temperatureC:Math.round(data.list[0].main.temp),
+              humidity:data.list[0].main.humidity,
+              windSpeed:data.list[0].wind.speed,
+              description:data.list[0].weather[0].description,
+              main1:data.list[0].weather[0].main,
+              dt_text:data.list[0].dt_txt.slice(0,10),
+                 //day 2
+                 temp2:Math.round(data.list[2].main.temp),
+                 main2:data.list[2].weather[0].main,
+                 description2:data.list[2].weather[0].description,
+                 
+                 dt_text2:data.list[2].dt_txt.slice(0,10),
+
+                 //day3
+                 temp3:Math.round(data.list[8].main.temp),
+                 main3:data.list[8].weather[0].main,
+                 description3:data.list[8].weather[0].description,
+                 
+                 dt_text3:data.list[8].dt_txt.slice(0,10),
+
+                 //day4
+                 temp4:Math.round(data.list[16].main.temp),
+                 main4:data.list[16].weather[0].main,
+                 description4:data.list[16].weather[0].description,
+                
+                 dt_text4:data.list[16].dt_txt.slice(0,10),
+                 //day5
+                 temp5:Math.round(data.list[24].main.temp),
+                 main5:data.list[24].weather[0].main,
+                 description5:data.list[24].weather[0].description,
+                 
+                 dt_text5:data.list[24].dt_txt.slice(0,10),
+
+                 //day6
+                 temp6:Math.round(data.list[32].main.temp),
+                 main6:data.list[32].weather[0].main,
+                 description6:data.list[32].weather[0].description,
+                 
+                 dt_text6:(data.list[32].dt_txt.slice(0,10)),
+
+                 //DAY 7
+                 temp7:Math.round(data.list[39].main.temp),
+                 main7:data.list[39].weather[0].main,
+                 description7:data.list[39].weather[0].description,
+                 
+                 dt_text7:data.list[39].dt_txt.slice(0,10),
+            //   temperatureC: Math.round(data.main.temp),
+            //   temperatureF: Math.round(data.main.temp * 1.8 + 32),
+            //   humidity: data.main.humidity,
+            //   main: data.weather[0].main,
+            //   country: data.sys.country,
+            //   sunrise: this.getTimeFromUnixTimeStamp(data.sys.sunrise),
+        
+            //   sunset: this.getTimeFromUnixTimeStamp(data.sys.sunset),
+        }
+        );
+        
+        switch (this.state.main1) {
+            case "Haze":
+              this.setState({ icon: "CLEAR_DAY" });
+              break;
+            case "Clouds":
+              this.setState({ icon: "CLOUDY" });
+              break;
+            case "Rain":
+              this.setState({ icon: "RAIN" });
+              break;
+            case "Snow":
+              this.setState({ icon: "SNOW" });
+              break;
+            case "Dust":
+              this.setState({ icon: "WIND" });
+              break;
+            case "Drizzle":
+              this.setState({ icon: "SLEET" });
+              break;
+            case "Fog":
+              this.setState({ icon: "FOG" });
+              break;
+            case "Smoke":
+              this.setState({ icon: "FOG" });
+              break;
+            case "Tornado":
+              this.setState({ icon: "WIND" });
+              break;
+            default:
+              this.setState({ icon: "CLEAR_DAY" });
+            }
+            switch (this.state.main2) {
+                case "Haze":
+                  this.setState({ icon2: "CLEAR_DAY" });
+                  break;
+                case "Clouds":
+                  this.setState({ icon2: "CLOUDY" });
+                  break;
+                case "Rain":
+                  this.setState({ icon2: "RAIN" });
+                  break;
+                case "Snow":
+                  this.setState({ icon2: "SNOW" });
+                  break;
+                case "Dust":
+                  this.setState({ icon2: "WIND" });
+                  break;
+                case "Drizzle":
+                  this.setState({ icon2: "SLEET" });
+                  break;
+                case "Fog":
+                  this.setState({ icon2: "FOG" });
+                  break;
+                case "Smoke":
+                  this.setState({ icon2: "FOG" });
+                  break;
+                case "Tornado":
+                  this.setState({ icon2: "WIND" });
+                  break;
+                default:
+                  this.setState({ icon2: "CLEAR_DAY" });
+                }
+                switch (this.state.main3) {
+                    case "Haze":
+                      this.setState({ icon3: "CLEAR_DAY" });
+                      break;
+                    case "Clouds":
+                      this.setState({ icon3: "CLOUDY" });
+                      break;
+                    case "Rain":
+                      this.setState({ icon3: "RAIN" });
+                      break;
+                    case "Snow":
+                      this.setState({ icon3: "SNOW" });
+                      break;
+                    case "Dust":
+                      this.setState({ icon3: "WIND" });
+                      break;
+                    case "Drizzle":
+                      this.setState({ icon3: "SLEET" });
+                      break;
+                    case "Fog":
+                      this.setState({ icon3: "FOG" });
+                      break;
+                    case "Smoke":
+                      this.setState({ icon3: "FOG" });
+                      break;
+                    case "Tornado":
+                      this.setState({ icon3: "WIND" });
+                      break;
+                    default:
+                      this.setState({ icon3: "CLEAR_DAY" });
+                    }
+                    switch (this.state.main4) {
+                        case "Haze":
+                          this.setState({ icon4: "CLEAR_DAY" });
+                          break;
+                        case "Clouds":
+                          this.setState({ icon4: "CLOUDY" });
+                          break;
+                        case "Rain":
+                          this.setState({ icon4: "RAIN" });
+                          break;
+                        case "Snow":
+                          this.setState({ icon4: "SNOW" });
+                          break;
+                        case "Dust":
+                          this.setState({ icon4: "WIND" });
+                          break;
+                        case "Drizzle":
+                          this.setState({ icon4: "SLEET" });
+                          break;
+                        case "Fog":
+                          this.setState({ icon4: "FOG" });
+                          break;
+                        case "Smoke":
+                          this.setState({ icon4: "FOG" });
+                          break;
+                        case "Tornado":
+                          this.setState({ icon4: "WIND" });
+                          break;
+                        default:
+                          this.setState({ icon4: "CLEAR_DAY" });
+                        }
+                        switch (this.state.main5) {
+                            case "Haze":
+                              this.setState({ icon5: "CLEAR_DAY" });
+                              break;
+                            case "Clouds":
+                              this.setState({ icon5: "CLOUDY" });
+                              break;
+                            case "Rain":
+                              this.setState({ icon5: "RAIN" });
+                              break;
+                            case "Snow":
+                              this.setState({ icon5: "SNOW" });
+                              break;
+                            case "Dust":
+                              this.setState({ icon5: "WIND" });
+                              break;
+                            case "Drizzle":
+                              this.setState({ icon5: "SLEET" });
+                              break;
+                            case "Fog":
+                              this.setState({ icon5: "FOG" });
+                              break;
+                            case "Smoke":
+                              this.setState({ icon5: "FOG" });
+                              break;
+                            case "Tornado":
+                              this.setState({ icon5: "WIND" });
+                              break;
+                            default:
+                              this.setState({ icon5: "CLEAR_DAY" });
+                            }
+                            switch (this.state.main6) {
+                                case "Haze":
+                                  this.setState({ icon6: "CLEAR_DAY" });
+                                  break;
+                                case "Clouds":
+                                  this.setState({ icon6: "CLOUDY" });
+                                  break;
+                                case "Rain":
+                                  this.setState({ icon6: "RAIN" });
+                                  break;
+                                case "Snow":
+                                  this.setState({ icon6: "SNOW" });
+                                  break;
+                                case "Dust":
+                                  this.setState({ icon6: "WIND" });
+                                  break;
+                                case "Drizzle":
+                                  this.setState({ icon6: "SLEET" });
+                                  break;
+                                case "Fog":
+                                  this.setState({ icon6: "FOG" });
+                                  break;
+                                case "Smoke":
+                                  this.setState({ icon6: "FOG" });
+                                  break;
+                                case "Tornado":
+                                  this.setState({ icon6: "WIND" });
+                                  break;
+                                default:
+                                  this.setState({ icon6: "CLEAR_DAY" });
+                                }
+                                switch (this.state.main7) {
+                                    case "Haze":
+                                      this.setState({ icon7: "CLEAR_DAY" });
+                                      break;
+                                    case "Clouds":
+                                      this.setState({ icon7: "CLOUDY" });
+                                      break;
+                                    case "Rain":
+                                      this.setState({ icon7: "RAIN" });
+                                      break;
+                                    case "Snow":
+                                      this.setState({ icon7: "SNOW" });
+                                      break;
+                                    case "Dust":
+                                      this.setState({ icon7: "WIND" });
+                                      break;
+                                    case "Drizzle":
+                                      this.setState({ icon7: "SLEET" });
+                                      break;
+                                    case "Fog":
+                                      this.setState({ icon7: "FOG" });
+                                      break;
+                                    case "Smoke":
+                                      this.setState({ icon7: "FOG" });
+                                      break;
+                                    case "Tornado":
+                                      this.setState({ icon7: "WIND" });
+                                      break;
+                                    default:
+                                      this.setState({ icon7: "CLEAR_DAY" });
+                                    }
+        };
+        
+
+    render(){
+        
+        if(typeof temperatureC != undefined)
+        {
+    return(
+        <div className="site-content">
+        <div className="site-header">
+            <div className="container">
+                <a href="" className="branding">
+                    <img src={require('./imaages/logo.png')} alt="" className="logo"/>
+                    <div className="logo-type">
+                        <h1 className="site-title">Company name</h1>
+                        <small className="site-description">tagline goes here</small>
+                    </div>
+                </a>
+
+                 
+                <div className="main-navigation">
+                    <button type="button" className="menu-toggle"><i className="fa fa-bars"></i></button>
+                    <ul className="menu">
+                        <li className="menu-item current-menu-item"><a href="index.html">Home</a></li>
+                        <li className="menu-item"><a href="">News</a></li>
+                        <li className="menu-item"><a href="">Live cameras</a></li>
+                        <li className="menu-item"><a href="">Photos</a></li>
+                        <li className="menu-item"><a href="">Contact</a></li>
+                    </ul> 
+                    
+                </div> 
+
+                <div className="mobile-navigation"></div>
+
+            </div>
+        </div> 
+       
+
+        <div className="hero" data-bg-color="white">
+            <div className="container">
+                <form  onSubmit={this.handlesubmit}className="find-location">
+                    <input type="text" value={this.state.value} onChange={this.handlechange} placeholder="enter your location..."/>
+                    <input type="submit" value="Get weather"/>
+                </form>
+
+            </div>
+        </div>
+        
+        <div className="forecast-table">
+            <div className="container">
+                <div className="forecast-container">
+                    <div className="today forecast">
+                        <div className="forecast-header">
+                            <div className="day">{this.state.dt_text}</div>
+                            <div className="date">CURRENT WEATHER</div>
+                        </div>
+                        
+                        <div className="forecast-content">
+                            <div className="location">{this.state.city}</div>
+                            <div className="degree">
+                                <div className="num">{this.state.temperatureC}<sup>o</sup>C</div>
+                                <div className="forecast-icon">
+                                    {/* <img src={this.state.icon} alt="" width="90"/> */}
+                                    <ReactAnimatedWeather
+                                        icon={this.state.icon}
+                                        color={defaults.color}
+                                        size={defaults.size}
+                                        animate={defaults.animate}
+                                        />
+                                </div>	
+                            </div><span>
+                            <span><img src={require('./imaages/icon-umberella@2x.png').default} alt=""/>{this.state.main1}</span>
+                            <span><img src={require('./imaages/icon-wind@2x.png')} alt=""/>{this.state.windSpeed}</span>
+                            <span><img src={require('./imaages/icon-compass@2x.png')} alt=""/>East</span>
+                            <span><img src={require('./imaages/humidity.png')} alt="" width="40"/>{this.state.humidity}%</span>
+
+                            </span>
+                        </div>
+                    </div>
+                    <div className="forecast">
+                        <div className="forecast-header">
+                            <div className="day">{this.state.dt_text2}</div>
+                        </div> 
+                        
+                        <div className="forecast-content">
+                            <div className="forecast-icon">
+                                {/* <img src={require('./imaages/icons/icon-3.svg')} alt="" width="48"/> */}
+                                <ReactAnimatedWeather
+                                        icon={this.state.icon2}
+                                        color={defaults.color}
+                                        size= {48}
+                                        animate={defaults.animate}
+                                        />
+                            </div>
+                            <div className="degree">{this.state.temp2}<sup>o</sup>C
+                            
+                            </div>
+                            <small><p>{this.state.main2}</p></small>
+                            
+                            {/* <small>{this.state.description2}</small> */}
+                        </div>
+                    </div>
+                    <div className="forecast">
+                        <div className="forecast-header">
+                            <div className="day">{this.state.dt_text3}</div>
+                        </div> 
+                        
+                        <div className="forecast-content">
+                            <div className="forecast-icon">
+                                {/* <img src={require('./imaages/icons/icon-5.svg')} alt="" width="48"/> */}
+                                <ReactAnimatedWeather
+                                        icon={this.state.icon3}
+                                        color={defaults.color}
+                                        size= {48}
+                                        animate={defaults.animate}
+                                        />
+                            </div>
+                            <div className="degree">{this.state.temp3}<sup>o</sup>C</div>
+                            <small><p>{this.state.main3}</p></small>
+                        </div>
+                    </div>
+                    <div className="forecast">
+                        <div className="forecast-header">
+                            <div className="day">{this.state.dt_text4}</div>
+                        </div> 
+                       
+                        <div className="forecast-content">
+                            <div className="forecast-icon">
+                                {/* <img src={require('./imaages/icons/icon-7.svg')} alt="" width="48"/> */}
+                                <ReactAnimatedWeather
+                                        icon={this.state.icon4}
+                                        color={defaults.color}
+                                        size= {48}
+                                        animate={defaults.animate}
+                                        />
+                            </div>
+                            <div className="degree">{this.state.temp4}<sup>o</sup>C</div>
+                            <small><p>{this.state.main4}</p></small>
+                        </div>
+                    </div>
+                    <div className="forecast">
+                        <div className="forecast-header">
+                            <div className="day">{this.state.dt_text5}</div>
+                        </div> 
+                       
+                        <div className="forecast-content">
+                            <div className="forecast-icon">
+                                {/* <img src={require('./imaages/icons/icon-12.svg')} alt="" width="48"/> */}
+                                <ReactAnimatedWeather
+                                        icon={this.state.icon5}
+                                        color={defaults.color}
+                                        size= {48}
+                                        animate={defaults.animate}
+                                        />
+                            </div>
+                            <div className="degree">{this.state.temp5}<sup>o</sup>C</div>
+                            <small><p>{this.state.main5}</p></small>
+                        </div>
+                    </div>
+                    <div className="forecast">
+                        <div className="forecast-header">
+                            <div className="day">{this.state.dt_text6}</div>
+                        </div> 
+                        <div className="forecast-content">
+                            <div className="forecast-icon">
+                                {/* <img src={require('./imaages/icons/icon-13.svg')} alt="" width="48"/> */}
+                                <ReactAnimatedWeather
+                                        icon={this.state.icon6}
+                                        color={defaults.color}
+                                        size= {48}
+                                        animate={defaults.animate}
+                                        />
+                            </div>
+                            <div className="degree">{this.state.temp6}<sup>o</sup>C</div>
+                            <small><p>{this.state.main6}</p></small>
+                        </div>
+                    </div>
+                    <div className="forecast">
+                        <div className="forecast-header">
+                            <div className="day">{this.state.dt_text7}</div>
+                        </div> 
+                        <div className="forecast-content">
+                            <div className="forecast-icon">
+                                {/* <img src={require('./imaages/icons/icon-14.svg')} alt="" width="48"/> */}
+                                <ReactAnimatedWeather
+                                        icon={this.state.icon7}
+                                        color={defaults.color}
+                                        size= {48}
+                                        animate={defaults.animate}
+                                        />
+                            </div>
+                            <div className="degree">{this.state.temp7}<sup>o</sup>C</div>
+                            <small><p>{this.state.main7}</p></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <main className="main-content">
+            <div className="fullwidth-block">
+                <div className="container">
+                    <h2 className="section-title">Live cameras</h2>
+                    <div className="row">
+                        <div className="col-md-3 col-sm-6">
+                            <div className="live-camera">
+                                <figure className="live-camera-cover"><img src={require('./imaages/live-camera-1.jpg')} alt=""/></figure>
+                                <h3 className="location">New York</h3>
+                                <small className="date">8 oct, 8:00AM</small>
+                            </div>
+                        </div>
+                        <div className="col-md-3 col-sm-6">
+                            <div className="live-camera">
+                                <figure className="live-camera-cover"><img src={require('./imaages/live-camera-2.jpg')} alt=""/></figure>
+                                <h3 className="location">Los Angeles</h3>
+                                <small className="date">8 oct, 8:00AM</small>
+                            </div>
+                        </div>
+                        <div className="col-md-3 col-sm-6">
+                            <div className="live-camera">
+                                <figure className="live-camera-cover"><img src={require('./imaages/live-camera-3.jpg')} alt=""/></figure>
+                                <h3 className="location">Chicago</h3>
+                                <small className="date">8 oct, 8:00AM</small>
+                            </div>
+                        </div>
+                        <div className="col-md-3 col-sm-6">
+                            <div className="live-camera">
+                                <figure className="live-camera-cover"><img src={require('./imaages/live-camera-4.jpg')} alt=""/></figure>
+                                <h3 className="location">London</h3>
+                                <small className="date">8 oct, 8:00AM</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="fullwidth-block" data-bg-color="#262936">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="news">
+                                <div className="date">06.10</div>
+                                <h3><a href="#">Doloremque laudantium totam sequi </a></h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo saepe assumenda dolorem modi, expedita voluptatum ducimus necessitatibus. Asperiores quod reprehenderit necessitatibus harum, mollitia, odit et consequatur maxime nisi amet doloremque.</p>
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className="news">
+                                <div className="date">06.10</div>
+                                <h3><a href="#">Doloremque laudantium totam sequi </a></h3>
+                                <p>Nobis architecto consequatur ab, ea, eum autem aperiam accusantium placeat vitae facere explicabo temporibus minus distinctio cum optio quis, dignissimos eius aspernatur fuga. Praesentium totam, corrupti beatae amet expedita veritatis.</p>
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className="news">
+                                <div className="date">06.10</div>
+                                <h3><a href="#">Doloremque laudantium totam sequi </a></h3>
+                                <p>Enim impedit officiis placeat qui recusandae doloremque possimus, iusto blanditiis, quam optio delectus maiores. Possimus rerum, velit cum natus eos. Cumque pariatur beatae asperiores, esse libero quas ad dolorem. Voluptates.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="fullwidth-block">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <h2 className="section-title">Application features</h2>
+                            <ul className="arrow-feature">
+                                <li>
+                                    <h3>Natus error sit voluptatem accusantium</h3>
+                                    <p>Doloremque laudantium totam rem aperiam Inventore veritatis et quasi architecto beatae vitae.</p>
+                                </li>
+                                <li>
+                                    <h3>Natus error sit voluptatem accusantium</h3>
+                                    <p>Doloremque laudantium totam rem aperiam Inventore veritatis et quasi architecto beatae vitae.</p>
+                                </li>
+                                <li>
+                                    <h3>Natus error sit voluptatem accusantium</h3>
+                                    <p>Doloremque laudantium totam rem aperiam Inventore veritatis et quasi architecto beatae vitae.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="col-md-4">
+                            <h2 className="section-title">Weather analyssis</h2>
+                            <ul className="arrow-list">
+                                <li><a href="#">Accusantium doloremque laudantium rem aperiam</a></li>
+                                <li><a href="#">Eaque ipsa quae ab illo inventore veritatis quasi</a></li>
+                                <li><a href="#">Architecto beatae vitae dicta sunt explicabo</a></li>
+                                <li><a href="#">Nemo enim ipsam voluptatem quia voluptas</a></li>
+                                <li><a href="#">Aspernatur aut odit aut fugit, sed quia consequuntur</a></li>
+                                <li><a href="#">Magni dolores eos qui ratione voluptatem sequi</a></li>
+                                <li><a href="#">Neque porro quisquam est qui dolorem ipsum quia</a></li>
+                            </ul>
+                        </div>
+                        <div className="col-md-4">
+                            <h2 className="section-title">Awesome Photos</h2>
+                            <div className="photo-grid">
+                                <a href="#"><img src={require('./imaages/thumb-1.jpg')} alt="#"/></a>
+                                <a href="#"><img src={require('./imaages/thumb-2.jpg')} alt="#"/></a>
+                                <a href="#"><img src={require('./imaages/thumb-3.jpg')} alt="#"/></a>
+                                <a href="#"><img src={require('./imaages/thumb-4.jpg')} alt="#"/></a>
+                                <a href="#"><img src={require('./imaages/thumb-5.jpg')} alt="#"/></a>
+                                <a href="#"><img src={require('./imaages/thumb-6.jpg')} alt="#"/></a>
+                                <a href="#"><img src={require('./imaages/thumb-7.jpg')} alt="#"/></a>
+                                <a href="#"><img src={require('./imaages/thumb-8.jpg')} alt="#"/></a>
+                                <a href="#"><img src={require('./imaages/thumb-9.jpg')} alt="#"/></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main> 
+
+        <footer className="site-footer">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-8">
+                        <form action="#" className="subscribe-form">
+                            <input type="text" placeholder="Enter your email to subscribe..."/>
+                            <input type="submit" value="Subscribe"/>
+                        </form>
+                    </div>
+                    <div className="col-md-3 col-md-offset-1">
+                        <div className="social-links">
+                            <a href="#"><i className="fa fa-facebook"></i></a>
+                            <a href="#"><i className="fa fa-twitter"></i></a>
+                            <a href="#"><i className="fa fa-google-plus"></i></a>
+                            <a href="#"><i className="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <p className="colophon">Copyright 2014 Company name. Designed by Themezy. All rights reserved</p>
+            </div>
+        </footer> 
+    </div>
+    );
+    }
+    else{
+        return(
+//             <div id="load">
+//   <div>G</div>
+//   <div>N</div>
+//   <div>I</div>
+//   <div>D</div>
+//   <div>A</div>
+//   <div>O</div>
+//   <div>L</div>
+// </div>
+
+
+
+<div class="loader">
+<div class="inner one"></div>
+<div class="inner two"></div>
+<div class="inner three"></div>
+</div>
+
+        );
+    }
+}
+}
+
+export default Home;
